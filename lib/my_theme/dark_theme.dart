@@ -1,7 +1,3 @@
-
-
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/my_theme/theme.dart';
@@ -18,8 +14,14 @@ class DarkTheme extends BaseLine {
 
   @override
   ThemeData get themeData => ThemeData(
+        primaryColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,
+        drawerTheme: DrawerThemeData(
+          backgroundColor: textColor,
+        ),
         appBarTheme: AppBarTheme(
+          titleTextStyle: GoogleFonts.inter(
+              fontSize: 20, fontWeight: FontWeight.w700, color: textColor),
           backgroundColor: backgroundColor,
           centerTitle: true,
         ),
