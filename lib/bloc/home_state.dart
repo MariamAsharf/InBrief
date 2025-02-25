@@ -1,4 +1,4 @@
-import '../model/newsResponse.dart';
+import '../model/news_response.dart';
 
 abstract class HomeState {}
 

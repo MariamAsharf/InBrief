@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:news_app/bloc/home_cubit.dart';
 import 'package:news_app/bloc/theme_cubit.dart';
+import 'package:news_app/internet_services.dart';
+import 'package:news_app/model/news_response.dart';
+import 'package:news_app/model/sources_response.dart';
 import 'package:news_app/my_theme/theme.dart';
-import 'package:news_app/repository/repo_impl.dart';
+import 'package:news_app/repository/home_remote_impl.dart';
 import 'package:news_app/widgets/news_details.dart';
 import 'package:provider/provider.dart';
 
@@ -15,12 +19,18 @@ import 'my_theme/light_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
+  InternetServices().init();
+  Hive.initFlutter();
+  Hive.registerAdapter(SourcesAdapter());
+  Hive.registerAdapter(NewsResponseAdapter());
+  Hive.registerAdapter(SourcesResponseAdapter());
+  Hive.registerAdapter(ArticlesAdapter());
 
   runApp(
     MultiProvider(
       providers: [
         BlocProvider(create: (context) => ThemeCubit()),
-        BlocProvider(create: (context) => HomeCubit(HomeRepoImpl())),
+        BlocProvider(create: (context) => HomeCubit(HomeRemoteImpl())),
       ],
       child: const NewsApp(),
     ),

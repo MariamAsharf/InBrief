@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/bloc/home_cubit.dart';
 import 'package:news_app/bloc/home_state.dart';
-import 'package:news_app/repository/repo_impl.dart';
+import 'package:news_app/repository/home_local_impl.dart';
+import 'package:news_app/repository/home_remote_impl.dart';
 
 import 'news_widget.dart';
 
@@ -12,10 +13,14 @@ class TabSection extends StatelessWidget {
 
   TabSection({super.key, required this.categoryName, required this.onTap});
 
+  bool hasInternet = true;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(HomeRepoImpl())..getSource(categoryName),
+      create: (context) =>
+          HomeCubit(hasInternet ? HomeRemoteImpl() : HomeLocalImpl())
+            ..getSource(categoryName),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state is GetSourceLoadingState) {
@@ -24,11 +29,12 @@ class TabSection extends StatelessWidget {
               barrierDismissible: false,
               builder: (context) => AlertDialog(
                 backgroundColor: Colors.transparent,
-                title: Center(child: CircularProgressIndicator(),),
+                title: Center(
+                  child: CircularProgressIndicator(),
+                ),
               ),
             );
-          }
-         else if (state is GetSourceErrorState) {
+          } else if (state is GetSourceErrorState) {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(

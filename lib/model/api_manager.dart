@@ -2,8 +2,8 @@
 //
 // import 'package:http/http.dart' as http;
 // import 'package:news_app/model/constant.dart';
-// import 'package:news_app/model/newsResponse.dart';
-// import 'package:news_app/model/source_response.dart';
+// import 'package:news_app/model/news_response.dart';
+// import 'package:news_app/model/sources_response.dart';
 //
 // class ApiManager {
 //   static Future<SourcesResponse> getSources(String categoryName) async {

@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:news_app/cache_helper.dart';
 import 'package:news_app/repository/repo.dart';
 
 import '../model/constant.dart';
-import '../model/newsResponse.dart';
-import '../model/source_response.dart';
+import '../model/news_response.dart';
+import '../model/sources_response.dart';
 
-class HomeRepoImpl implements HomeRepo {
+class HomeRemoteImpl implements HomeRepo {
   @override
   Future<SourcesResponse> getSource(String catId) async {
     Uri uri = Uri.https(Constant.BASE_URL, '/v2/top-headlines/sources', {
@@ -15,6 +16,8 @@ class HomeRepoImpl implements HomeRepo {
       "category": catId,
     });
     http.Response response = await http.get(uri);
+    await HiveServices.saveSourceResponse(SourcesResponse());
+    print("SourceResponse Saved");
     return SourcesResponse.fromJson(jsonDecode(response.body));
   }
 
@@ -25,6 +28,8 @@ class HomeRepoImpl implements HomeRepo {
       "sources": sourceId,
     });
     http.Response response = await http.get(uri);
+    await HiveServices.saveNewsResponse(NewsResponse());
+    print("NewsResponse Saved");
     return NewsResponse.fromJson(jsonDecode(response.body));
   }
 

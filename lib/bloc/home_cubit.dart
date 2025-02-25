@@ -9,8 +9,8 @@ import 'package:news_app/repository/repo.dart';
 
 import '../home_screen.dart';
 import '../model/constant.dart';
-import '../model/newsResponse.dart';
-import '../model/source_response.dart';
+import '../model/news_response.dart';
+import '../model/sources_response.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   SourcesResponse? sourcesResponse;

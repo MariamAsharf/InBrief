@@ -5,6 +5,7 @@ import 'package:news_app/bloc/home_state.dart';
 import 'package:news_app/widgets/category_section.dart';
 import 'package:news_app/widgets/news_search.dart';
 import 'package:news_app/widgets/tab_section.dart';
+
 import 'widgets/app_drawer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -45,9 +46,9 @@ class HomeScreen extends StatelessWidget {
           body: cubit.selectedCategory == null
               ? CategorySection(onCatigoryClick: cubit.onCategoryClicked)
               : TabSection(
-            categoryName: cubit.selectedCategory!,
-            onTap: cubit.onBack,
-          ),
+                  categoryName: cubit.selectedCategory!,
+                  onTap: cubit.onBack,
+                ),
         );
       },
     );
